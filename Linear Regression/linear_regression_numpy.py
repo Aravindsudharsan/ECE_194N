@@ -29,10 +29,10 @@ print("shape of 3rd set is",np.shape(Y))
 
 # getting all but the last 10 samples and printing them aling with the shape
 X_sqfeet = X1_value[0:37]
-print("First 38 samples of sq feel",X_sqfeet)
+print("First 38 samples of sq feet",X_sqfeet)
 print("Shape of final data set is",np.shape(X_sqfeet))
 X_bedrooms = X2_value[0:37]
-print("First 38 samples of sq feel",X_bedrooms)
+print("First 38 samples of bedrooms",X_bedrooms)
 print("Shape of final data set is",np.shape(X_bedrooms))
 Y_price = Y[0:37]
 print("First 38 samples of price",Y_price)
@@ -45,7 +45,7 @@ plt.show()
 
 plt.plot(X_bedrooms,Y_price,'ro',label = 'bedrooms')
 plt.legend()
-plt.show
+plt.show()
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection = '3d')
@@ -113,8 +113,8 @@ Y_new = Y_price.mean()
 Y_new1 = Y_price.std()
 
 #printing the normalized values
-print("Normalized X data" , X1_normalize_data)
-print("Normalized X data" , X2_normalize_data)
+print("Normalized X1 data" , X1_normalize_data)
+print("Normalized X2 data" , X2_normalize_data)
 print("Normalized Y data" , Y_normalize_data)
 
 #visualizing the normalized values
@@ -124,7 +124,7 @@ plt.show()
 
 plt.plot(X2_normalize_data,Y_normalize_data,'ro',label = 'bedrooms')
 plt.legend()
-plt.show
+plt.show()
 
 fig = plt.figure()
 ax = fig.add_subplot(111, projection = '3d')
@@ -158,6 +158,8 @@ print("Gradient is",g)
 predicted_cost = cost_function(X1,Y2,g)
 print("Minimized cost for normalized data is",predicted_cost)
 
+print("STD is",Y_new1)
+print("Mean is",Y_new)
 predicted_new = (predicted_cost * Y_new1) + Y_new
 print("Precited cost in normal form is", predicted_new)
 
@@ -167,5 +169,5 @@ fig, ax = plt.subplots()
 ax.plot(np.arange(iterations), cost, 'r')  
 ax.set_xlabel('Iterations')  
 ax.set_ylabel('Cost')  
-ax.set_title('Error vs. Training Epoch')  
+ax.set_title('Cost vs. Training Epoch')  
 plt.show()

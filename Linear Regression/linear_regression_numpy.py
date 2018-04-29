@@ -28,15 +28,16 @@ print("shape of 3rd set is",np.shape(Y))
 
 
 # getting all but the last 10 samples and printing them aling with the shape
-X_sqfeet = X1_value[0:37]
+X_sqfeet = X1_value[:-10]
 print("First 38 samples of sq feet",X_sqfeet)
 print("Shape of final data set is",np.shape(X_sqfeet))
-X_bedrooms = X2_value[0:37]
+X_bedrooms = X2_value[:-10]
 print("First 38 samples of bedrooms",X_bedrooms)
 print("Shape of final data set is",np.shape(X_bedrooms))
-Y_price = Y[0:37]
+Y_price = Y[:-10]
 print("First 38 samples of price",Y_price)
 print("Shape of final label is",np.shape(Y_price))
+
 
 # visualizing the data sets
 plt.plot(X_sqfeet,Y_price,'ro',label = 'Square feet')
@@ -72,6 +73,14 @@ Y1 = Y_price
 print("Price is",Y1)
 print("Shape is",np.shape(Y1))
 
+# test data
+X1_test = X1_value[-10:]
+X2_test = X2_value[-10:]
+X_test = np.column_stack((X1_test,X2_test))
+Y_test = Y[-10:]
+
+print("Shape of X test is", X_test)
+print("Shape of Y_test",Y_test)
 # cost function
 def cost_function(X,y,theta):
     add_result = np.power(((X @ theta.T) - y),2)
@@ -108,6 +117,9 @@ def normalize_function(array):
 X1_normalize_data = normalize_function(X_sqfeet)
 X2_normalize_data = normalize_function(X_bedrooms)
 Y_normalize_data = normalize_function(Y_price)
+
+X_test_normalize = normalize_function(X_test)
+Y_test_normalize = normalize_function(Y_test)
 
 Y_new = Y_price.mean()
 Y_new1 = Y_price.std()
@@ -155,14 +167,18 @@ print(np.shape(Y2))
 g,cost = gradient_function(X1,Y2,weight,iterations,learning_rate)
 print("Gradient is",g)
 
-predicted_cost = cost_function(X1,Y2,g)
-print("Minimized cost for normalized data is",predicted_cost)
+ones = np.ones([X_test.shape[0],1])
+X_test_normalize = np.concatenate((ones,X_test_normalize),axis =1)
 
 print("STD is",Y_new1)
 print("Mean is",Y_new)
-predicted_new = (predicted_cost * Y_new1) + Y_new
-print("Precited cost in normal form is", predicted_new)
+predicted_cost = X_test_normalize.dot(g.T)
+predicted_value = (predicted_cost * Y_new1) + Y_new
+print("predicted value is",predicted_value)
+actual_value = (Y_test_normalize * Y_new1) + Y_new
 
+for i in range(0,len(predicted_value)):
+	print("Actual value is" , actual_value[i], "\t Predicted value is",predicted_value[i])
 
 #plot the cost
 fig, ax = plt.subplots()  
